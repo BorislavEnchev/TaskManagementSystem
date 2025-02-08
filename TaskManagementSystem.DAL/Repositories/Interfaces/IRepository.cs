@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace TaskManagementSystem.DAL.Repositories.Interfaces
+﻿namespace TaskManagementSystem.DAL.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {

@@ -17,7 +17,7 @@ namespace TaskManagementSystem
     /// </summary>
     public partial class App : Application
     {
-        private readonly ServiceProvider _serviceProvider;
+        public static IServiceProvider ServiceProvider { get; private set; }
 
         public App()
         {
@@ -38,26 +38,35 @@ namespace TaskManagementSystem
             services.AddScoped<IUserService, UserService>();
 
             // Register ViewModels
-            //services.AddSingleton<TaskViewModel>();
-            //services.AddSingleton<CommentViewModel>();
+            services.AddTransient<TaskViewModel>();    
+            services.AddTransient<CommentViewModel>();
 
-            //services.AddTransient<TaskViewModel>();
-            //services.AddTransient<CommentViewModel>();
-            //services.AddTransient<TaskView>();
-            //services.AddTransient<CommentView>();
+            services.AddSingleton<MainViewModel>();
 
             // Register Views
-            //services.AddSingleton<MainWindow>();
+            services.AddSingleton<MainWindow>(); 
 
-            _serviceProvider = services.BuildServiceProvider();
+            services.AddTransient<TaskView>();
+            services.AddTransient<CommentView>();
+
+            ServiceProvider = services.BuildServiceProvider();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            var mainWindow = _serviceProvider.GetService<MainWindow>();
-            mainWindow?.Show();
+            try
+            {
+                var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+                mainWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                // Handle any startup errors
+                MessageBox.Show($"Failed to start the application: {ex.Message}", "Startup Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
+            }
         }
     }
 

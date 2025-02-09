@@ -5,6 +5,5 @@
              xmlns:vm="clr-namespace:TaskManagementSystem.ViewModels"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <vm:ViewModelLocator x:Key="Locator"/>
     </Application.Resources>
 </Application>

@@ -1,0 +1,30 @@
+﻿<Window x:Class="TaskManagementSystem.Views.CommentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:TaskManagementSystem.ViewModels"
+        Title="Comments" Height="450" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView ItemsSource="{Binding Comments}" SelectedItem="{Binding SelectedComment}" Grid.Row="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Date Added" DisplayMemberBinding="{Binding DateAdded}"/>
+                    <GridViewColumn Header="Comment" DisplayMemberBinding="{Binding CommentText}"/>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding CommentType}"/>
+                    <GridViewColumn Header="Reminder Date" DisplayMemberBinding="{Binding ReminderDate}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+            <Button Command="{Binding LoadCommentsCommand}">Refresh</Button>
+            <Button Command="{Binding AddCommentCommand}">Add Comment</Button>
+            <Button Command="{Binding UpdateCommentCommand}">Update Comment</Button>
+            <Button Command="{Binding DeleteCommentCommand}">Delete Comment</Button>
+        </StackPanel>
+    </Grid>
+</Window>

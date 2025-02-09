@@ -2,10 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Windows;
+using TaskManagementSystem.BLL.Interfaces;
+using TaskManagementSystem.BLL.Services;
 using TaskManagementSystem.DAL.Contexts;
 using TaskManagementSystem.DAL.Repositories;
 using TaskManagementSystem.DAL.Repositories.Interfaces;
-//using TaskManagementSystem.BLL.Services;
+using TaskManagementSystem.ViewModels;
+using TaskManagementSystem.Views;
 
 namespace TaskManagementSystem
 {
@@ -27,18 +30,24 @@ namespace TaskManagementSystem
             // Register Repositories
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // Register Services (Business Layer)
-            //services.AddScoped<TaskService>();
-            //services.AddScoped<CommentService>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IUserService, UserService>();
 
             // Register ViewModels
-            //services.AddSingleton<MainWindowViewModel>();
             //services.AddSingleton<TaskViewModel>();
             //services.AddSingleton<CommentViewModel>();
 
+            //services.AddTransient<TaskViewModel>();
+            //services.AddTransient<CommentViewModel>();
+            //services.AddTransient<TaskView>();
+            //services.AddTransient<CommentView>();
+
             // Register Views
-            services.AddSingleton<MainWindow>();
+            //services.AddSingleton<MainWindow>();
 
             _serviceProvider = services.BuildServiceProvider();
         }

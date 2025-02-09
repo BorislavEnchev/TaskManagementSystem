@@ -59,11 +59,11 @@ namespace TaskManagementSystem.ViewModels
             var newTask = new DAL.Models.Task
             {
                 CreatedDate = DateTime.Now,
-                RequiredByDate = DateTime.Now.AddDays(7),
-                Description = "New Task",
+                RequiredByDate = DateTime.Now.AddDays(14), 
+                Description = "Test Task",
                 Status = TaskStatus.New,
                 Type = TaskType.Other,
-                AssignedToId = Users.FirstOrDefault()?.Id ?? 0,
+                AssignedToId = Users.FirstOrDefault()?.Id ?? 1,
                 NextActionDate = DateTime.Now
             };
             await _taskService.CreateTaskAsync(newTask);

@@ -40,12 +40,12 @@ namespace TaskManagementSystem
             // Register ViewModels
             services.AddTransient<TaskViewModel>();    
             services.AddTransient<CommentViewModel>();
-
+            services.AddTransient<TaskCreationViewModel>();
             services.AddSingleton<MainViewModel>();
 
             // Register Views
-            services.AddSingleton<MainWindow>(); 
-
+            services.AddSingleton<MainWindow>();
+            services.AddTransient<TaskCreationView>();
             services.AddTransient<TaskView>();
             services.AddTransient<CommentView>();
 

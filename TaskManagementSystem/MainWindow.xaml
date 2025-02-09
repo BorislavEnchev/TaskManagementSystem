@@ -22,6 +22,7 @@
         <TextBlock Text="{Binding OpenTaskViewCommand}" />
         <!-- Navigation or Control Panel -->
         <StackPanel Grid.Column="1" Margin="5">
+            <Button Command="{Binding OpenTaskCreationViewCommand}" Content="Create Task"/>
             <Button Command="{Binding OpenTaskViewCommand}" Content="Manage Tasks"/>
             <Button Command="{Binding OpenCommentViewCommand}" Content="Manage Comments"/>
             <Button Command="{Binding OpenSearchViewCommand}" Content="Search"/>

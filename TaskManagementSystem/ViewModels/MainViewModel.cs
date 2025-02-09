@@ -9,6 +9,7 @@ namespace TaskManagementSystem.ViewModels
     {
         private readonly IServiceProvider _serviceProvider;
 
+        public IRelayCommand OpenTaskCreationViewCommand { get; }
         public IRelayCommand OpenTaskViewCommand { get; }
         public IRelayCommand OpenCommentViewCommand { get; }
         public IRelayCommand OpenSearchViewCommand { get; }
@@ -21,6 +22,14 @@ namespace TaskManagementSystem.ViewModels
             OpenCommentViewCommand = new RelayCommand(OpenCommentView);
             OpenSearchViewCommand = new RelayCommand(OpenSearchView);
             LogoutCommand = new RelayCommand(Logout);
+            OpenTaskCreationViewCommand = new RelayCommand(OpenTaskCreationView);
+        }
+
+        private void OpenTaskCreationView()
+        {
+            var taskCreationModel = _serviceProvider.GetRequiredService<TaskCreationViewModel>();
+            var taskCreationView = new TaskCreationView(taskCreationModel);
+            taskCreationView.Show();
         }
 
         private void OpenTaskView()

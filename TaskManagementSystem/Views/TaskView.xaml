@@ -5,14 +5,12 @@
         Title="Task Management" Height="350" Width="525">
     <Grid>
         <ListView ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}">
-            <!-- Define columns for Task properties -->
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
                     <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
                     <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
                     <GridViewColumn Header="Due Date" DisplayMemberBinding="{Binding RequiredByDate}"/>
-                    <!-- Add more columns as needed -->
                 </GridView>
             </ListView.View>
         </ListView>

@@ -9,8 +9,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-
-        <!-- Placeholder for a default view or summary dashboard -->
+        
         <Border Grid.Column="0" Background="WhiteSmoke" Padding="5">
             <TextBlock Text="Welcome to the Task Management System" 
                        FontSize="20" FontWeight="Bold" 
@@ -23,8 +22,7 @@
         <!-- Navigation or Control Panel -->
         <StackPanel Grid.Column="1" Margin="5">
             <Button Command="{Binding OpenTaskCreationViewCommand}" Content="Create Task"/>
-            <Button Command="{Binding OpenTaskViewCommand}" Content="Manage Tasks"/>
-            <Button Command="{Binding OpenCommentViewCommand}" Content="Manage Comments"/>
+            <Button Command="{Binding OpenTaskViewCommand}" Content="Task Dashboard"/>
             <Button Command="{Binding OpenSearchViewCommand}" Content="Search"/>
             <Button Command="{Binding LogoutCommand}" Content="Logout"/>
         </StackPanel>

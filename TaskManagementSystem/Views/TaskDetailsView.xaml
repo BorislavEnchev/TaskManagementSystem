@@ -1,0 +1,48 @@
+﻿<Window x:Class="TaskManagementSystem.Views.TaskDetailsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Task Details" Height="450" Width="600">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Task Description" FontWeight="Bold"/>
+        <TextBox Grid.Row="1" Text="{Binding Task.Description, Mode=TwoWay}" Height="30" />
+
+        <TextBlock Grid.Row="2" Text="Required By Date" FontWeight="Bold"/>
+        <DatePicker Grid.Row="3" SelectedDate="{Binding Task.RequiredByDate, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="4" Text="Status" FontWeight="Bold"/>
+        <ComboBox Grid.Row="5" ItemsSource="{Binding TaskStatuses}" 
+                  SelectedItem="{Binding Task.Status, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="6" Text="Type" FontWeight="Bold"/>
+        <ComboBox Grid.Row="7" ItemsSource="{Binding TaskTypes}" 
+                  SelectedItem="{Binding Task.Type, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="8" Text="Assigned To" FontWeight="Bold"/>
+        <ComboBox Grid.Row="9" ItemsSource="{Binding Users}" 
+                  SelectedItem="{Binding Task.AssignedTo, Mode=TwoWay}" 
+                  DisplayMemberPath="Name" />
+
+        <TextBlock Grid.Row="10" Text="Comments" FontWeight="Bold"/>
+        <ListBox Grid.Row="11" ItemsSource="{Binding Comments}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Content}" />
+                        <TextBlock Text="{Binding CreatedDate}" FontSize="10" Foreground="Gray"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Grid.Row="12" Content="Update Task" Command="{Binding UpdateTaskCommand}" />
+    </Grid>
+</Window>

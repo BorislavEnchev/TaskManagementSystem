@@ -34,6 +34,7 @@ namespace TaskManagementSystem.ViewModels
         public ObservableCollection<TaskStatus> Statuses { get; set; } = new ObservableCollection<TaskStatus>();
         public ObservableCollection<TaskType> Types { get; set; } = new ObservableCollection<TaskType>();
 
+
         private DAL.Models.Task _selectedTask;
         public DAL.Models.Task SelectedTask
         {

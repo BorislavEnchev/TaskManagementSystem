@@ -20,12 +20,18 @@ namespace TaskManagementSystem.ViewModels
             _taskService = taskService;
             _userService = userService;
 
-            Task<IEnumerable<User>> users = _userService.GetAllUsersAsync();
-            Users = new ObservableCollection<User>(/*users*/);
+            Users = new ObservableCollection<User>();
+            TaskStatuses = new ObservableCollection<TaskStatus>(Enum.GetValues<TaskStatus>());
+            TaskTypes = new ObservableCollection<TaskType>(Enum.GetValues<TaskType>());
+
+            LoadUsersAsync();
+
             SaveTaskCommand = new RelayCommand(async () => await SaveTask());
         }
 
-        public ObservableCollection<User> Users { get; set; }
+        public ObservableCollection<User> Users { get; }
+        public ObservableCollection<TaskStatus> TaskStatuses { get; }
+        public ObservableCollection<TaskType> TaskTypes { get; }
 
         private string _description;
         public string Description
@@ -78,5 +84,23 @@ namespace TaskManagementSystem.ViewModels
 
             await _taskService.CreateTaskAsync(newTask);
         }
+
+        private async void LoadUsersAsync()
+        {
+            try
+            {
+                var users = await _userService.GetAllUsersAsync();
+                Users.Clear();
+                foreach (var user in users)
+                {
+                    Users.Add(user);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle errors (log or notify user)
+            }
+        }
     }
+
 }

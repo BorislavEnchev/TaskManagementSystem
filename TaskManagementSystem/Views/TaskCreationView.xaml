@@ -21,17 +21,14 @@
         <DatePicker SelectedDate="{Binding RequiredByDate}" Grid.Row="3"/>
 
         <TextBlock Text="Status:" Grid.Row="4"/>
-        <ComboBox ItemsSource="{Binding TaskStatus}" 
-                  SelectedItem="{Binding Status}" Grid.Row="5"/>
+        <ComboBox ItemsSource="{Binding TaskStatuses}" SelectedItem="{Binding Status, Mode=TwoWay}" Grid.Row="5"/>
 
         <TextBlock Text="Task Type:" Grid.Row="6"/>
-        <ComboBox ItemsSource="{Binding TaskType}" 
-                  SelectedItem="{Binding Type}" Grid.Row="7"/>
+        <ComboBox ItemsSource="{Binding TaskTypes}" SelectedItem="{Binding Type, Mode=TwoWay}" Grid.Row="7"/>
 
-        <TextBlock Text="Assigned To:" Grid.Row="8"/>
-        <ComboBox ItemsSource="{Binding Users}" DisplayMemberPath="Name" 
-                  SelectedItem="{Binding AssignedTo}" Grid.Row="9"/>
+        <TextBlock Text="Assigned To:" Grid.Row="7" Margin="0,27,0,-27"/>
+        <ComboBox ItemsSource="{Binding Users}" SelectedItem="{Binding AssignedTo, Mode=TwoWay}" DisplayMemberPath="Name" Grid.Row="7" Margin="0,43,0,-43"/>
 
-        <Button Content="Save Task" Command="{Binding SaveTaskCommand}" Grid.Row="10" Width="100"/>
+        <Button Content="Save Task" Command="{Binding SaveTaskCommand}" Width="100" Margin="190,77,190,-75" Grid.Row="7"/>
     </Grid>
 </Window>

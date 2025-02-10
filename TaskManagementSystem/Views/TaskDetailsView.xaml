@@ -8,31 +8,45 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Task Description" FontWeight="Bold"/>
-        <TextBox Grid.Row="1" Text="{Binding Task.Description, Mode=TwoWay}" Height="30" />
+        <!-- Task Description -->
+        <TextBlock Text="Task Description" FontWeight="Bold" Grid.Row="0"/>
+        <TextBox Grid.Row="1" Text="{Binding Task.Description, Mode=TwoWay}" Height="30" Margin="0,5,0,10"/>
 
+        <!-- Required By Date -->
         <TextBlock Grid.Row="2" Text="Required By Date" FontWeight="Bold"/>
-        <DatePicker Grid.Row="3" SelectedDate="{Binding Task.RequiredByDate, Mode=TwoWay}" />
+        <DatePicker Grid.Row="3" SelectedDate="{Binding Task.RequiredByDate, Mode=TwoWay}" Height="30" Margin="0,5,0,10"/>
 
+        <!-- Status -->
         <TextBlock Grid.Row="4" Text="Status" FontWeight="Bold"/>
         <ComboBox Grid.Row="5" ItemsSource="{Binding TaskStatuses}" 
-                  SelectedItem="{Binding Task.Status, Mode=TwoWay}" />
+                  SelectedItem="{Binding Task.Status, Mode=TwoWay}" Height="30" Margin="0,5,0,10"/>
 
+        <!-- Type -->
         <TextBlock Grid.Row="6" Text="Type" FontWeight="Bold"/>
         <ComboBox Grid.Row="7" ItemsSource="{Binding TaskTypes}" 
-                  SelectedItem="{Binding Task.Type, Mode=TwoWay}" />
+                  SelectedItem="{Binding Task.Type, Mode=TwoWay}" Height="30" Margin="0,5,0,10"/>
 
+        <!-- Assigned To -->
         <TextBlock Grid.Row="8" Text="Assigned To" FontWeight="Bold"/>
         <ComboBox Grid.Row="9" ItemsSource="{Binding Users}" 
                   SelectedItem="{Binding Task.AssignedTo, Mode=TwoWay}" 
-                  DisplayMemberPath="Name" />
+                  DisplayMemberPath="Name" Height="30" Margin="0,5,0,10"/>
 
+        <!-- Comments -->
         <TextBlock Grid.Row="10" Text="Comments" FontWeight="Bold"/>
-        <ListBox Grid.Row="11" ItemsSource="{Binding Comments}">
+        <ListBox Grid.Row="11" ItemsSource="{Binding Comments}" Margin="0,5,0,10">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -43,6 +57,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Button Grid.Row="12" Content="Update Task" Command="{Binding UpdateTaskCommand}" />
+        <!-- Update Task Button -->
+        <Button Grid.Row="12" Content="Update Task" Command="{Binding UpdateTaskCommand}" Margin="0,10,0,0" Height="30"/>
     </Grid>
 </Window>

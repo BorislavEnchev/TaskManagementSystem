@@ -41,11 +41,13 @@ namespace TaskManagementSystem
             services.AddTransient<TaskViewModel>();    
             services.AddTransient<CommentViewModel>();
             services.AddTransient<TaskCreationViewModel>();
+            services.AddTransient<TaskDetailsViewModel>();
             services.AddSingleton<MainViewModel>();
 
             // Register Views
             services.AddSingleton<MainWindow>();
             services.AddTransient<TaskCreationView>();
+            services.AddTransient<TaskDetailsView>();
             services.AddTransient<TaskView>();
             services.AddTransient<CommentView>();
 
@@ -59,7 +61,6 @@ namespace TaskManagementSystem
             try
             {
                 var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
-                mainWindow.Show();
             }
             catch (Exception ex)
             {

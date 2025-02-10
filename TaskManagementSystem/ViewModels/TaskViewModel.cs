@@ -12,6 +12,7 @@ namespace TaskManagementSystem.ViewModels
     {
         private readonly ITaskService _taskService;
         private readonly IUserService _userService;
+        private DAL.Models.Task _selectedTask;
         public TaskViewModel(ITaskService taskService, IUserService userService)
         {
             _taskService = taskService;
@@ -28,19 +29,16 @@ namespace TaskManagementSystem.ViewModels
             DeleteTaskCommand = new AsyncRelayCommand(DeleteTaskAsync);
             LoadUsersCommand = new AsyncRelayCommand(LoadUsersAsync);
         }
-
-        public ObservableCollection<DAL.Models.Task> Tasks { get; set; } = new ObservableCollection<DAL.Models.Task>();
-        public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
-        public ObservableCollection<TaskStatus> Statuses { get; set; } = new ObservableCollection<TaskStatus>();
-        public ObservableCollection<TaskType> Types { get; set; } = new ObservableCollection<TaskType>();
-
-
-        private DAL.Models.Task _selectedTask;
         public DAL.Models.Task SelectedTask
         {
             get => _selectedTask;
             set => SetProperty(ref _selectedTask, value);
         }
+
+        public ObservableCollection<DAL.Models.Task> Tasks { get; set; } = new ObservableCollection<DAL.Models.Task>();
+        public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
+        public ObservableCollection<TaskStatus> Statuses { get; set; } = new ObservableCollection<TaskStatus>();
+        public ObservableCollection<TaskType> Types { get; set; } = new ObservableCollection<TaskType>();
 
         public IAsyncRelayCommand LoadTasksCommand { get; }
         public IAsyncRelayCommand CreateTaskCommand { get; }

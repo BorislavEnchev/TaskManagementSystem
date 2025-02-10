@@ -12,5 +12,10 @@ namespace TaskManagementSystem.Views
             InitializeComponent();
             DataContext = viewModel;
         }
+
+        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

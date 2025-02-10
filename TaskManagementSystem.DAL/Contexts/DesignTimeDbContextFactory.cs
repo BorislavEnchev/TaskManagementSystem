@@ -8,6 +8,7 @@ namespace TaskManagementSystem.DAL
     {
         public TaskManagementContext CreateDbContext(string[] args)
         {
+            // Usually Setting environment variable
             var connectionString = "Server=localhost;Database=TaskManagementDB;Integrated Security=True;Encrypt=True;TrustServerCertificate=True;";
 
             var optionsBuilder = new DbContextOptionsBuilder<TaskManagementContext>();

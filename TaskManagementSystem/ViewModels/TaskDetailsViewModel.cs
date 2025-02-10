@@ -40,6 +40,13 @@ public class TaskDetailsViewModel : BaseViewModel
         set => SetProperty(ref _task, value);
     }
 
+    private string _newCommentContent;
+    public string NewCommentContent
+    {
+        get => _newCommentContent;
+        set => SetProperty(ref _newCommentContent, value);
+    }
+
     public IRelayCommand UpdateTaskCommand { get; }
 
     public async System.Threading.Tasks.Task LoadTaskAsync(int taskId)
@@ -65,6 +72,38 @@ public class TaskDetailsViewModel : BaseViewModel
 
     private async System.Threading.Tasks.Task UpdateTask()
     {
+        // Save the task
         await _taskService.UpdateTaskAsync(Task);
+
+        // Save the new comment if it's not empty
+        if (!string.IsNullOrWhiteSpace(NewCommentContent))
+        {
+            var newComment = new Comment
+            {
+                TaskId = Task.Id,
+                Content = NewCommentContent,
+                Type = CommentType.General,
+                DateAdded = DateTime.UtcNow,
+                IsEditable = true
+            };
+
+            await _commentService.AddCommentAsync(newComment);
+            Comments.Add(newComment);
+            NewCommentContent = string.Empty; // Clear the new comment text box
+        }
+
+        // Save changes to existing comments
+        foreach (var comment in Comments)
+        {
+            await _commentService.UpdateCommentAsync(comment);
+        }
+
+        // Reload comments
+        var comments = await _commentService.GetCommentsByTaskIdAsync(Task.Id);
+        Comments.Clear();
+        foreach (var comment in comments)
+        {
+            Comments.Add(comment);
+        }
     }
 }

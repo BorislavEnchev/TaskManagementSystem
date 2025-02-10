@@ -53,7 +53,7 @@ namespace TaskManagementSystem.ViewModels
 
         private void Logout()
         {
-            Application.Current.Shutdown(); // Closes the app
+            Application.Current.Shutdown();
         }
     }
 }

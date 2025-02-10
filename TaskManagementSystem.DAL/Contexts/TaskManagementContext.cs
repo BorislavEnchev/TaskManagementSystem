@@ -18,7 +18,6 @@ namespace TaskManagementSystem.DAL.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure the relationship between Comment and Task
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Task)
                 .WithMany(t => t.Comments)

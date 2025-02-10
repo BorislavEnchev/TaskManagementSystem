@@ -58,6 +58,11 @@ The application follows a multi-layered architecture and the MVVM design pattern
 - Add a comment in the "Comments" section.
 - Edit or delete comments as needed.
 
+### Editing Comments
+- Navigate to the task details page.
+- Select comment from the "Comments" section.
+- Click on the content and change as needed.
+
 ### Searching Tasks
 - Use the search bar on the "Search" page to find tasks and comments.
 - Double-click on a search result to open the corresponding task or comment.

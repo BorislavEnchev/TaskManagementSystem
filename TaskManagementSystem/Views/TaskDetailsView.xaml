@@ -51,7 +51,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Content}" />
+                        <TextBox Text="{Binding Content, Mode=TwoWay}" Margin="0,5,0,5"/>
                         <TextBlock Text="{Binding DateAdded}" FontSize="10" Foreground="Gray"/>
                     </StackPanel>
                 </DataTemplate>

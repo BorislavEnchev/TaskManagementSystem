@@ -98,7 +98,7 @@ public class TaskDetailsViewModel : BaseViewModel
             await _commentService.UpdateCommentAsync(comment);
         }
 
-        // Reload comments
+        // Reload comments (optional, if you want to refresh the list)
         var comments = await _commentService.GetCommentsByTaskIdAsync(Task.Id);
         Comments.Clear();
         foreach (var comment in comments)

@@ -14,6 +14,7 @@ namespace TaskManagementSystem.ViewModels
     {
         private readonly ITaskService _taskService;
         private readonly IUserService _userService;
+        public event Action RequestClose;
 
         public TaskCreationViewModel(ITaskService taskService, IUserService userService)
         {
@@ -83,6 +84,8 @@ namespace TaskManagementSystem.ViewModels
             };
 
             await _taskService.CreateTaskAsync(newTask);
+
+            RequestClose?.Invoke();
         }
 
         private async void LoadUsersAsync()

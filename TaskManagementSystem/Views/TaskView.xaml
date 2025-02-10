@@ -4,7 +4,19 @@
         xmlns:vm="clr-namespace:TaskManagementSystem.ViewModels"
         Title="Task Management" Height="350" Width="525">
     <Grid>
-        <ListView ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}" SelectionChanged="ListView_SelectionChanged">
+        <!-- Define columns: one for the ListView, one for the buttons -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <!-- ListView takes remaining space -->
+            <ColumnDefinition Width="Auto" />
+            <!-- Buttons take only required space -->
+        </Grid.ColumnDefinitions>
+
+        <!-- ListView in the first column -->
+        <ListView Grid.Column="0" 
+                  ItemsSource="{Binding Tasks}" 
+                  SelectedItem="{Binding SelectedTask}" 
+                  MouseDoubleClick="ListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
@@ -14,10 +26,16 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Orientation="Vertical" Margin="100">
-            <Button Command="{Binding LoadTasksCommand}">Load Tasks</Button>
-            <Button Command="{Binding CreateTaskCommand}">Create Test Task (Test)</Button>
-            <Button Command="{Binding DeleteTaskCommand}">Delete Task</Button>
+
+        <!-- Buttons in the second column -->
+        <StackPanel Grid.Column="1" 
+                    Orientation="Vertical" 
+                    Margin="10" 
+                    VerticalAlignment="Top">
+            <Button Command="{Binding LoadTasksCommand}" Margin="0,5">Load Tasks</Button>
+            <Button Command="{Binding CreateTaskCommand}" Margin="0,5">Create Test Task (Test)</Button>
+            <Button Command="{Binding UpdateTaskCommand}" Margin="0,5">Update Task</Button>
+            <Button Command="{Binding DeleteTaskCommand}" Margin="0,5">Delete Task</Button>
         </StackPanel>
     </Grid>
 </Window>

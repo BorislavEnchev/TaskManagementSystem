@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using TaskManagementSystem.BLL.Interfaces;
 using TaskManagementSystem.DAL.Enums;
 using TaskManagementSystem.DAL.Models;
+using TaskManagementSystem.Views;
 using Task = System.Threading.Tasks.Task;
 using TaskStatus = TaskManagementSystem.DAL.Enums.TaskStatus;
 
@@ -12,7 +14,7 @@ namespace TaskManagementSystem.ViewModels
     {
         private readonly ITaskService _taskService;
         private readonly IUserService _userService;
-        private DAL.Models.Task _selectedTask;
+
         public TaskViewModel(ITaskService taskService, IUserService userService)
         {
             _taskService = taskService;
@@ -29,6 +31,8 @@ namespace TaskManagementSystem.ViewModels
             DeleteTaskCommand = new AsyncRelayCommand(DeleteTaskAsync);
             LoadUsersCommand = new AsyncRelayCommand(LoadUsersAsync);
         }
+
+        private DAL.Models.Task _selectedTask;
         public DAL.Models.Task SelectedTask
         {
             get => _selectedTask;
@@ -73,7 +77,15 @@ namespace TaskManagementSystem.ViewModels
         {
             if (SelectedTask != null)
             {
-                await _taskService.UpdateTaskAsync(SelectedTask);
+                // Resolve TaskDetailsViewModel from the DI container
+                var taskDetailsViewModel = App.ServiceProvider.GetRequiredService<TaskDetailsViewModel>();
+
+                // Load the selected task details asynchronously
+                await taskDetailsViewModel.LoadTaskAsync(SelectedTask.Id);
+
+                var taskDetailsView = new TaskDetailsView(taskDetailsViewModel);
+                taskDetailsView.Show();
+
                 await LoadTasksAsync();
             }
         }

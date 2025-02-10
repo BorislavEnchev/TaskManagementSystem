@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using System.Windows.Input;
 using TaskManagementSystem.ViewModels;
 
 namespace TaskManagementSystem.Views
@@ -12,7 +13,14 @@ namespace TaskManagementSystem.Views
             DataContext = viewModel;
         }
 
-        private async void ListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        // Handle double-click event
+        private async void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            await OpenTaskDetailsViewAsync();
+        }
+
+        // Method to open TaskDetailsView asynchronously
+        private async Task OpenTaskDetailsViewAsync()
         {
             var viewModel = DataContext as TaskViewModel;
             if (viewModel?.SelectedTask != null)
@@ -20,7 +28,7 @@ namespace TaskManagementSystem.Views
                 // Resolve TaskDetailsViewModel from the DI container
                 var taskDetailsViewModel = App.ServiceProvider.GetRequiredService<TaskDetailsViewModel>();
 
-                // Load the selected task details
+                // Load the selected task details asynchronously
                 await taskDetailsViewModel.LoadTaskAsync(viewModel.SelectedTask.Id);
 
                 // Resolve and show the TaskDetailsView

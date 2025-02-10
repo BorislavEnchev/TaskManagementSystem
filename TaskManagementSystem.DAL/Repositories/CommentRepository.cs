@@ -13,7 +13,6 @@ namespace TaskManagementSystem.DAL.Repositories
         {
             _context = context;
         }
-
         public async Task<IEnumerable<Comment>> GetCommentsByTaskIdAsync(int taskId)
         {
             return await _context.Comments

@@ -1,9 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using TaskManagementSystem.BLL.Interfaces;
 using TaskManagementSystem.DAL.Enums;
 using TaskManagementSystem.DAL.Models;
 using TaskManagementSystem.ViewModels;
+using Task = System.Threading.Tasks.Task;
 using TaskStatus = TaskManagementSystem.DAL.Enums.TaskStatus;
 
 public class TaskDetailsViewModel : BaseViewModel
@@ -22,26 +26,20 @@ public class TaskDetailsViewModel : BaseViewModel
         TaskStatuses = new ObservableCollection<TaskStatus>(Enum.GetValues<TaskStatus>());
         TaskTypes = new ObservableCollection<TaskType>(Enum.GetValues<TaskType>());
         Comments = new ObservableCollection<Comment>();
-        FilteredComments = new ObservableCollection<Comment>(Comments);
+        FilteredComments = new ObservableCollection<Comment>();
 
         SearchCommentsCommand = new RelayCommand(UpdateFilteredComments);
-        UpdateTaskCommand = new RelayCommand(async () => await UpdateTask());
-        DeleteCommentCommand = new RelayCommand<Comment>(async (comment) => await DeleteComment(comment));
+        UpdateTaskCommand = new RelayCommand(async () => await SafeExecuteAsync(UpdateTask));
+        DeleteCommentCommand = new RelayCommand<Comment>(async (comment) => await SafeExecuteAsync(() => DeleteComment(comment)));
 
-        LoadUsersAsync();
+        _ = LoadUsersAsync();
     }
 
     public ObservableCollection<User> Users { get; }
     public ObservableCollection<TaskStatus> TaskStatuses { get; }
     public ObservableCollection<TaskType> TaskTypes { get; }
     public ObservableCollection<Comment> Comments { get; }
-
-    private ObservableCollection<Comment> _filteredComments;
-    public ObservableCollection<Comment> FilteredComments
-    {
-        get => _filteredComments ??= new ObservableCollection<Comment>();
-        set => SetProperty(ref _filteredComments, value);
-    }
+    public ObservableCollection<Comment> FilteredComments { get; private set; }
 
     private TaskManagementSystem.DAL.Models.Task _task;
     public TaskManagementSystem.DAL.Models.Task Task
@@ -74,19 +72,45 @@ public class TaskDetailsViewModel : BaseViewModel
     public IRelayCommand DeleteCommentCommand { get; }
     public IRelayCommand UpdateTaskCommand { get; }
 
-    public async System.Threading.Tasks.Task LoadTaskAsync(int taskId)
+    public async Task LoadTaskAsync(int taskId)
     {
-        Task = await _taskService.GetTaskByIdAsync(taskId);
-        var comments = await _commentService.GetCommentsByTaskIdAsync(taskId);
-        Comments.Clear();
-        foreach (var comment in comments)
+        try
         {
-            Comments.Add(comment);
+            Task = await _taskService.GetTaskByIdAsync(taskId);
+            var comments = await _commentService.GetCommentsByTaskIdAsync(taskId);
+
+            Comments.Clear();
+            foreach (var comment in comments)
+            {
+                Comments.Add(comment);
+            }
+
+            UpdateFilteredComments();
         }
-        UpdateFilteredComments();
+        catch (Exception ex)
+        {
+            // Handle error (logging, UI notification, etc.)
+        }
     }
 
-    private async System.Threading.Tasks.Task DeleteComment(Comment comment)
+    private async Task LoadUsersAsync()
+    {
+        try
+        {
+            var users = await _userService.GetAllUsersAsync();
+            Users.Clear();
+            foreach (var user in users)
+            {
+                Users.Add(user);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle error (logging, UI notification, etc.)
+        }
+    }
+
+    private async Task DeleteComment(Comment comment)
     {
         if (comment != null)
         {
@@ -94,17 +118,6 @@ public class TaskDetailsViewModel : BaseViewModel
             Comments.Remove(comment);
             FilteredComments.Remove(comment);
         }
-    }
-
-    private async void LoadUsersAsync()
-    {
-        var users = await _userService.GetAllUsersAsync();
-        Users.Clear();
-        foreach (var user in users)
-        {
-            Users.Add(user);
-        }
-        UpdateFilteredComments();
     }
 
     private void UpdateFilteredComments()
@@ -116,12 +129,14 @@ public class TaskDetailsViewModel : BaseViewModel
         else
         {
             var searchTextLower = SearchText.ToLower();
-            FilteredComments = new ObservableCollection<Comment>(Comments.Where(c =>
-                c.Content.ToLower().Contains(searchTextLower)));
+            FilteredComments = new ObservableCollection<Comment>(
+                Comments.Where(c => c.Content.ToLower().Contains(searchTextLower))
+            );
         }
+        OnPropertyChanged(nameof(FilteredComments));
     }
 
-    private async System.Threading.Tasks.Task UpdateTask()
+    private async Task UpdateTask()
     {
         await _taskService.UpdateTaskAsync(Task);
 
@@ -138,7 +153,7 @@ public class TaskDetailsViewModel : BaseViewModel
 
             await _commentService.AddCommentAsync(newComment);
             Comments.Add(newComment);
-            NewCommentContent = string.Empty; 
+            NewCommentContent = string.Empty;
         }
 
         foreach (var comment in Comments)
@@ -146,15 +161,18 @@ public class TaskDetailsViewModel : BaseViewModel
             await _commentService.UpdateCommentAsync(comment);
         }
 
-        // Reload comments (optional, if you want to refresh the list)
-        var comments = await _commentService.GetCommentsByTaskIdAsync(Task.Id);
-        Comments.Clear();
-        foreach (var comment in comments)
-        {
-            Comments.Add(comment);
-        }
+        UpdateFilteredComments();
+    }
 
-        SearchText = string.Empty;
-        FilteredComments = new ObservableCollection<Comment>(Comments);
+    private async Task SafeExecuteAsync(Func<Task> operation)
+    {
+        try
+        {
+            await operation();
+        }
+        catch (Exception ex)
+        {
+            // Handle error (logging, UI notification, etc.)
+        }
     }
 }

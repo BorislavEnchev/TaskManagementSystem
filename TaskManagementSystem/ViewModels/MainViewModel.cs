@@ -19,8 +19,6 @@ namespace TaskManagementSystem.ViewModels
         {
             _serviceProvider = serviceProvider;
             OpenTaskViewCommand = new RelayCommand(OpenTaskView);
-            OpenCommentViewCommand = new RelayCommand(OpenCommentView);
-            OpenSearchViewCommand = new RelayCommand(OpenSearchView);
             LogoutCommand = new RelayCommand(Logout);
             OpenTaskCreationViewCommand = new RelayCommand(OpenTaskCreationView);
         }
@@ -37,18 +35,6 @@ namespace TaskManagementSystem.ViewModels
             var taskViewModel = _serviceProvider.GetRequiredService<TaskViewModel>();
             var taskView = new TaskView(taskViewModel);
             taskView.Show();
-        }
-
-        private void OpenCommentView()
-        {
-            var commentViewModel = _serviceProvider.GetRequiredService<CommentViewModel>();
-            var commentView = new CommentView(commentViewModel);
-            commentView.Show();
-        }
-
-        private void OpenSearchView()
-        {
-            MessageBox.Show("Search functionality not implemented yet!");
         }
 
         private void Logout()

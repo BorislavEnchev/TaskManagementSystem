@@ -39,7 +39,6 @@ namespace TaskManagementSystem
 
             // Register ViewModels
             services.AddTransient<TaskViewModel>();    
-            services.AddTransient<CommentViewModel>();
             services.AddTransient<TaskCreationViewModel>();
             services.AddTransient<TaskDetailsViewModel>();
             services.AddSingleton<MainViewModel>();
@@ -49,7 +48,6 @@ namespace TaskManagementSystem
             services.AddTransient<TaskCreationView>();
             services.AddTransient<TaskDetailsView>();
             services.AddTransient<TaskView>();
-            services.AddTransient<CommentView>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

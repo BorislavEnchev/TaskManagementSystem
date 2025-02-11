@@ -23,7 +23,6 @@
         <StackPanel Grid.Column="1" Margin="5">
             <Button Command="{Binding OpenTaskCreationViewCommand}" Content="Create Task"/>
             <Button Command="{Binding OpenTaskViewCommand}" Content="Task Dashboard"/>
-            <Button Command="{Binding OpenSearchViewCommand}" Content="Search"/>
             <Button Command="{Binding LogoutCommand}" Content="Logout"/>
         </StackPanel>
     </Grid>

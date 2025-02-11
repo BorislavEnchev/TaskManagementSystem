@@ -44,13 +44,18 @@ The application follows a multi-layered architecture and the MVVM design pattern
    - Build and run the application.
 
 ## Usage
+### Creating user
+- First you need to add a User.
+- User Create (Test User) button on the main window.
+
 ### Creating Tasks
 - Navigate to the "Create Task" page.
 - Fill in the required fields and click "Save" to create a new task.
 
 ### Managing Tasks
 - Navigate to the "Task Dashboard" page.
-- Select a task to view its details.
+- Open Task details by dobule click on it or,
+- Select a task and click Update to view/edit its details.
 - Edit or delete the task as needed.
 
 ### Adding Comments
@@ -65,7 +70,7 @@ The application follows a multi-layered architecture and the MVVM design pattern
 
 ### Searching Tasks
 - Use the search bar on the "Search" page to find tasks and comments.
-- Double-click on a search result to open the corresponding task or comment.
+- Search for certain word or perform empty search to reset.
 
 ## FAQ
 ### How do I install the required dependencies?

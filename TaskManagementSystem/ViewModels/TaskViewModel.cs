@@ -57,6 +57,7 @@ namespace TaskManagementSystem.ViewModels
             foreach (var task in tasks) Tasks.Add(task);
         }
 
+        // Test method to quickly create a new task
         private async Task CreateTaskAsync()
         {
             var newTask = new DAL.Models.Task

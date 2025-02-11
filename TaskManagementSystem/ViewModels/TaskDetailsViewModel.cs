@@ -24,6 +24,7 @@ public class TaskDetailsViewModel : BaseViewModel
         Comments = new ObservableCollection<Comment>();
 
         UpdateTaskCommand = new RelayCommand(async () => await UpdateTask());
+        DeleteCommentCommand = new RelayCommand<Comment>(async (comment) => await DeleteComment(comment));
 
         LoadUsersAsync();
     }
@@ -32,6 +33,13 @@ public class TaskDetailsViewModel : BaseViewModel
     public ObservableCollection<TaskStatus> TaskStatuses { get; }
     public ObservableCollection<TaskType> TaskTypes { get; }
     public ObservableCollection<Comment> Comments { get; }
+
+    private ObservableCollection<Comment> _filteredComments;
+    public ObservableCollection<Comment> FilteredComments
+    {
+        get => _filteredComments ??= new ObservableCollection<Comment>();
+        set => SetProperty(ref _filteredComments, value);
+    }
 
     private TaskManagementSystem.DAL.Models.Task _task;
     public TaskManagementSystem.DAL.Models.Task Task
@@ -47,6 +55,15 @@ public class TaskDetailsViewModel : BaseViewModel
         set => SetProperty(ref _newCommentContent, value);
     }
 
+    private string _searchText;
+    public string SearchText
+    {
+        get => _searchText;
+        set => SetProperty(ref _searchText, value);
+    }
+
+    public IRelayCommand SearchCommentsCommand { get; }
+    public IRelayCommand DeleteCommentCommand { get; }
     public IRelayCommand UpdateTaskCommand { get; }
 
     public async System.Threading.Tasks.Task LoadTaskAsync(int taskId)
@@ -57,6 +74,15 @@ public class TaskDetailsViewModel : BaseViewModel
         foreach (var comment in comments)
         {
             Comments.Add(comment);
+        }
+    }
+
+    private async System.Threading.Tasks.Task DeleteComment(Comment comment)
+    {
+        if (comment != null)
+        {
+            await _commentService.DeleteCommentAsync(comment.Id);
+            Comments.Remove(comment);
         }
     }
 
@@ -89,7 +115,7 @@ public class TaskDetailsViewModel : BaseViewModel
 
             await _commentService.AddCommentAsync(newComment);
             Comments.Add(newComment);
-            NewCommentContent = string.Empty; // Clear the new comment text box
+            NewCommentContent = string.Empty; 
         }
 
         // Save changes to existing comments

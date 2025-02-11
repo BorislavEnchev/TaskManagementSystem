@@ -1,7 +1,7 @@
 ﻿<Window x:Class="TaskManagementSystem.Views.TaskCreationView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Create Task" Height="400" Width="500">
+        Title="Create Task" Height="450" Width="500">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -18,7 +18,10 @@
 
         <!-- Description -->
         <TextBlock Text="Description:" Grid.Row="0"/>
-        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="10,5,20,10"/>
+        <TextBox AcceptsReturn="True" TextWrapping="Wrap" MinHeight="100" 
+         VerticalScrollBarVisibility="Auto" 
+         Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
+         Grid.Row="1" Margin="10,5,20,10"/>
 
         <!-- Required By Date -->
         <TextBlock Text="Required By Date:" Grid.Row="2"/>

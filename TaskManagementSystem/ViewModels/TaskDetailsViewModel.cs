@@ -22,7 +22,9 @@ public class TaskDetailsViewModel : BaseViewModel
         TaskStatuses = new ObservableCollection<TaskStatus>(Enum.GetValues<TaskStatus>());
         TaskTypes = new ObservableCollection<TaskType>(Enum.GetValues<TaskType>());
         Comments = new ObservableCollection<Comment>();
+        FilteredComments = new ObservableCollection<Comment>(Comments);
 
+        SearchCommentsCommand = new RelayCommand(UpdateFilteredComments);
         UpdateTaskCommand = new RelayCommand(async () => await UpdateTask());
         DeleteCommentCommand = new RelayCommand<Comment>(async (comment) => await DeleteComment(comment));
 
@@ -59,7 +61,13 @@ public class TaskDetailsViewModel : BaseViewModel
     public string SearchText
     {
         get => _searchText;
-        set => SetProperty(ref _searchText, value);
+        set
+        {
+            if (SetProperty(ref _searchText, value))
+            {
+                UpdateFilteredComments();
+            }
+        }
     }
 
     public IRelayCommand SearchCommentsCommand { get; }
@@ -75,6 +83,7 @@ public class TaskDetailsViewModel : BaseViewModel
         {
             Comments.Add(comment);
         }
+        UpdateFilteredComments();
     }
 
     private async System.Threading.Tasks.Task DeleteComment(Comment comment)
@@ -94,14 +103,27 @@ public class TaskDetailsViewModel : BaseViewModel
         {
             Users.Add(user);
         }
+        UpdateFilteredComments();
+    }
+
+    private void UpdateFilteredComments()
+    {
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            FilteredComments = new ObservableCollection<Comment>(Comments);
+        }
+        else
+        {
+            var searchTextLower = SearchText.ToLower();
+            FilteredComments = new ObservableCollection<Comment>(Comments.Where(c =>
+                c.Content.ToLower().Contains(searchTextLower)));
+        }
     }
 
     private async System.Threading.Tasks.Task UpdateTask()
     {
-        // Save the task
         await _taskService.UpdateTaskAsync(Task);
 
-        // Save the new comment if it's not empty
         if (!string.IsNullOrWhiteSpace(NewCommentContent))
         {
             var newComment = new Comment
@@ -118,7 +140,6 @@ public class TaskDetailsViewModel : BaseViewModel
             NewCommentContent = string.Empty; 
         }
 
-        // Save changes to existing comments
         foreach (var comment in Comments)
         {
             await _commentService.UpdateCommentAsync(comment);

@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:TaskManagementSystem.ViewModels"
-        Title="Task Management" Height="450" Width="600">
+        Title="Task Management" Height="500" Width="650">
     <Grid>
         <!-- Define columns: one for the ListView, one for the buttons -->
         <Grid.ColumnDefinitions>
@@ -14,12 +14,13 @@
 
         <!-- ListView in the first column -->
         <ListView Grid.Column="0" 
+                  FontSize="13"
                   ItemsSource="{Binding Tasks}" 
                   SelectedItem="{Binding SelectedTask}" 
                   MouseDoubleClick="ListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" />
                     <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
                     <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
                     <GridViewColumn Header="Due Date" DisplayMemberBinding="{Binding RequiredByDate}"/>
@@ -32,8 +33,21 @@
                     Orientation="Vertical" 
                     Margin="10" 
                     VerticalAlignment="Top">
-            <Button Command="{Binding UpdateTaskCommand}" Margin="0,5">Update Task</Button>
-            <Button Command="{Binding DeleteTaskCommand}" Margin="0,5">Delete Task</Button>
+            <Button Command="{Binding UpdateTaskCommand}" 
+                    Content="Update Task" 
+                    Padding="10" 
+                    FontSize="14" 
+                    Width="150" 
+                    Height="40" 
+                    Margin="5"/>
+
+            <Button Command="{Binding DeleteTaskCommand}" 
+                    Content="Delete Task" 
+                    Padding="10" 
+                    FontSize="14" 
+                    Width="150" 
+                    Height="40" 
+                    Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

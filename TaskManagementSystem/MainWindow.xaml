@@ -9,22 +9,48 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        
-        <Border Grid.Column="0" Background="WhiteSmoke" Padding="5">
+
+        <Border Grid.Column="0" Background="WhiteSmoke" Padding="10">
             <TextBlock Text="Welcome to the Task Management System" 
                        FontSize="20" FontWeight="Bold" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center"/>
             <!-- You could place a summary or dashboard here -->
-            
         </Border>
-        <TextBlock Text="{Binding OpenTaskViewCommand}" />
+
         <!-- Navigation or Control Panel -->
-        <StackPanel Grid.Column="1" Margin="5">
-            <Button Command="{Binding CreateTestUserCommand}" Content="Create (Test User)" />
-            <Button Command="{Binding OpenTaskCreationViewCommand}" Content="Create Task"/>
-            <Button Command="{Binding OpenTaskViewCommand}" Content="Task Dashboard"/>
-            <Button Command="{Binding LogoutCommand}" Content="Logout"/>
+        <StackPanel Grid.Column="1" Margin="10">
+            <Button Command="{Binding CreateTestUserCommand}" 
+                    Content="Create (Test User)" 
+                    Padding="10" 
+                    FontSize="14" 
+                    Width="150" 
+                    Height="40" 
+                    Margin="5"/>
+
+            <Button Command="{Binding OpenTaskCreationViewCommand}" 
+                    Content="Create Task" 
+                    Padding="10" 
+                    FontSize="14" 
+                    Width="150" 
+                    Height="40" 
+                    Margin="5"/>
+
+            <Button Command="{Binding OpenTaskViewCommand}" 
+                    Content="Task Dashboard" 
+                    Padding="10" 
+                    FontSize="14" 
+                    Width="150" 
+                    Height="40" 
+                    Margin="5"/>
+
+            <Button Command="{Binding LogoutCommand}" 
+                    Content="Logout" 
+                    Padding="10" 
+                    FontSize="14" 
+                    Width="150" 
+                    Height="40" 
+                    Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

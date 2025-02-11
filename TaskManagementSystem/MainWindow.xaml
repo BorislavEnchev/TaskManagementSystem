@@ -21,6 +21,7 @@
         <TextBlock Text="{Binding OpenTaskViewCommand}" />
         <!-- Navigation or Control Panel -->
         <StackPanel Grid.Column="1" Margin="5">
+            <Button Command="{Binding CreateTestUserCommand}" Content="Create (Test User)" />
             <Button Command="{Binding OpenTaskCreationViewCommand}" Content="Create Task"/>
             <Button Command="{Binding OpenTaskViewCommand}" Content="Task Dashboard"/>
             <Button Command="{Binding LogoutCommand}" Content="Logout"/>

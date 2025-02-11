@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Windows;
+using TaskManagementSystem.DAL.Contexts;
+using TaskManagementSystem.DAL.Models;
 using TaskManagementSystem.Views;
 
 namespace TaskManagementSystem.ViewModels
@@ -11,9 +14,8 @@ namespace TaskManagementSystem.ViewModels
 
         public IRelayCommand OpenTaskCreationViewCommand { get; }
         public IRelayCommand OpenTaskViewCommand { get; }
-        public IRelayCommand OpenCommentViewCommand { get; }
-        public IRelayCommand OpenSearchViewCommand { get; }
         public IRelayCommand LogoutCommand { get; }
+        public IRelayCommand CreateTestUserCommand { get; }
 
         public MainViewModel(IServiceProvider serviceProvider)
         {
@@ -21,6 +23,7 @@ namespace TaskManagementSystem.ViewModels
             OpenTaskViewCommand = new RelayCommand(OpenTaskView);
             LogoutCommand = new RelayCommand(Logout);
             OpenTaskCreationViewCommand = new RelayCommand(OpenTaskCreationView);
+            CreateTestUserCommand = new RelayCommand(CreateTestUser);
         }
 
         private void OpenTaskCreationView()
@@ -35,6 +38,19 @@ namespace TaskManagementSystem.ViewModels
             var taskViewModel = _serviceProvider.GetRequiredService<TaskViewModel>();
             var taskView = new TaskView(taskViewModel);
             taskView.Show();
+        }
+
+        // This method makes easy to create a user for testing purposes
+        private void CreateTestUser()
+        {
+            var dbContext = _serviceProvider.GetRequiredService<TaskManagementContext>();
+
+            var testUser = new User { Name = "Test User" };
+
+            dbContext.Users.Add(testUser);
+            dbContext.SaveChanges();
+
+            MessageBox.Show("Test User created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Logout()

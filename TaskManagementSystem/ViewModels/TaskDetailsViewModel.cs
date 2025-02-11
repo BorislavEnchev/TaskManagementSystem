@@ -93,6 +93,8 @@ public class TaskDetailsViewModel : BaseViewModel
             await _commentService.DeleteCommentAsync(comment.Id);
             Comments.Remove(comment);
         }
+        SearchText = string.Empty;
+        FilteredComments = new ObservableCollection<Comment>(Comments);
     }
 
     private async void LoadUsersAsync()

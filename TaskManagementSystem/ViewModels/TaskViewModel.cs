@@ -26,7 +26,6 @@ namespace TaskManagementSystem.ViewModels
             Types = new ObservableCollection<TaskType>(Enum.GetValues(typeof(TaskType)).Cast<TaskType>());
 
             LoadTasksCommand = new AsyncRelayCommand(LoadTasksAsync);
-            CreateTaskCommand = new AsyncRelayCommand(CreateTaskAsync);
             UpdateTaskCommand = new AsyncRelayCommand(UpdateTaskAsync);
             DeleteTaskCommand = new AsyncRelayCommand(DeleteTaskAsync);
             LoadUsersCommand = new AsyncRelayCommand(LoadUsersAsync);
@@ -62,23 +61,6 @@ namespace TaskManagementSystem.ViewModels
             var tasks = await _taskService.GetAllTasksAsync();
             Tasks.Clear();
             foreach (var task in tasks) Tasks.Add(task);
-        }
-
-        // Test method to quickly create a new task
-        private async Task CreateTaskAsync()
-        {
-            var newTask = new DAL.Models.Task
-            {
-                CreatedDate = DateTime.Now,
-                RequiredByDate = DateTime.Now.AddDays(14), 
-                Description = "Test Task",
-                Status = TaskStatus.New,
-                Type = TaskType.Other,
-                AssignedToId = Users.FirstOrDefault()?.Id ?? 1,
-                NextActionDate = DateTime.Now
-            };
-            await _taskService.CreateTaskAsync(newTask);
-            await LoadTasksAsync();
         }
 
         private async Task UpdateTaskAsync()

@@ -41,6 +41,20 @@ namespace TaskManagementSystem.ViewModels
             set => SetProperty(ref _description, value);
         }
 
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == nameof(Description) && string.IsNullOrWhiteSpace(Description))
+                {
+                    return "Description is required.";
+                }
+                return null;
+            }
+        }
+
+        public string Error => null;
+
         private DateTime _requiredByDate = DateTime.Now;
         public DateTime RequiredByDate
         {
@@ -73,6 +87,11 @@ namespace TaskManagementSystem.ViewModels
 
         private async Task SaveTask()
         {
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                return; // Prevent saving if Description is empty
+            }
+
             var newTask = new DAL.Models.Task
             {
                 Description = Description,

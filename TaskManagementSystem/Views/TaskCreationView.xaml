@@ -20,7 +20,7 @@
         <TextBlock Text="Description:" Grid.Row="0"/>
         <TextBox AcceptsReturn="True" TextWrapping="Wrap" MinHeight="100" 
          VerticalScrollBarVisibility="Auto" 
-         Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
+         Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
          Grid.Row="1" Margin="10,5,20,10"/>
 
         <!-- Required By Date -->

@@ -32,7 +32,6 @@
                     Orientation="Vertical" 
                     Margin="10" 
                     VerticalAlignment="Top">
-            <Button Command="{Binding LoadTasksCommand}" Margin="0,5">Load Tasks</Button>
             <Button Command="{Binding CreateTaskCommand}" Margin="0,5">Create Test Task (Test)</Button>
             <Button Command="{Binding UpdateTaskCommand}" Margin="0,5">Update Task</Button>
             <Button Command="{Binding DeleteTaskCommand}" Margin="0,5">Delete Task</Button>

@@ -152,5 +152,8 @@ public class TaskDetailsViewModel : BaseViewModel
         {
             Comments.Add(comment);
         }
+
+        SearchText = string.Empty;
+        FilteredComments = new ObservableCollection<Comment>(Comments);
     }
 }

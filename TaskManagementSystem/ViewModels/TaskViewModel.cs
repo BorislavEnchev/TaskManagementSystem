@@ -30,6 +30,8 @@ namespace TaskManagementSystem.ViewModels
             UpdateTaskCommand = new AsyncRelayCommand(UpdateTaskAsync);
             DeleteTaskCommand = new AsyncRelayCommand(DeleteTaskAsync);
             LoadUsersCommand = new AsyncRelayCommand(LoadUsersAsync);
+
+            LoadTasksOnInitialization();
         }
 
         private DAL.Models.Task _selectedTask;
@@ -49,6 +51,11 @@ namespace TaskManagementSystem.ViewModels
         public IAsyncRelayCommand UpdateTaskCommand { get; }
         public IAsyncRelayCommand DeleteTaskCommand { get; }
         public IAsyncRelayCommand LoadUsersCommand { get; }
+
+        private async void LoadTasksOnInitialization()
+        {
+            await LoadTasksAsync();
+        }
 
         private async Task LoadTasksAsync()
         {

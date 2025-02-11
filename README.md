@@ -61,7 +61,8 @@ The application follows a multi-layered architecture and the MVVM design pattern
 ### Adding Comments
 - Navigate to the task details page.
 - Add a comment in the "Comments" section.
-- Edit or delete comments as needed.
+- Edit comments anytime then click Update to save.
+- Delete comment as needed from the button next to it.
 
 ### Editing Comments
 - Navigate to the task details page.
